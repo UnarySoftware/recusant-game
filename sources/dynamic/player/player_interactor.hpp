@@ -14,6 +14,8 @@ namespace recusant
         GD_CLASS(PlayerInteractor, Component);
 
     private:
+
+        godot::Callable _interact_callable;
         godot::Ref<SleepBlock> _process_sleep;
         godot::RayCast3D* _raycast = nullptr;
         Interactable* _collision_target = nullptr;

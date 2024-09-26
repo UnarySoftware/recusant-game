@@ -43,9 +43,9 @@ namespace recusant
     {
         RUNTIME_ONLY();
 
-        // TODO Move this to an authority changing place
         _interact_menu = InteractMenu::get_singleton();
-        _interact_menu->connect("on_interact", Callable(this, "on_interact"));
+
+        _interact_callable = Callable(this, _interact_menu->on_interact);
 
         _snapshot = get_component<PlayerSnapshot>();
 
@@ -56,6 +56,21 @@ namespace recusant
     void PlayerInteractor::on_authority_changed()
     {
         set_process(is_multiplayer_authority());
+
+        if (is_multiplayer_authority())
+        {
+            if (!_interact_menu->is_connected(_interact_menu->on_interact, _interact_callable))
+            {
+                _interact_menu->connect(_interact_menu->on_interact, _interact_callable);
+            }
+        }
+        else
+        {
+            if (_interact_menu->is_connected(_interact_menu->on_interact, _interact_callable))
+            {
+                _interact_menu->disconnect(_interact_menu->on_interact, _interact_callable);
+            }
+        }
     }
 
     void PlayerInteractor::_process(double p_delta)
