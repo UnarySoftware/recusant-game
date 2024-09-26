@@ -7,25 +7,7 @@
 #include <godot_cpp/variant/basis.hpp>
 #include <godot_cpp/variant/string.hpp>
 
-// TODO Cleanup this file
-
-#define BIND_RPC(p_method, p_authority, p_transfer_mode, p_call_local) \
-    do { \
-    Dictionary __##p_method##_bind_rpc; \
-    __##p_method##_bind_rpc["rpc_mode"] = p_authority; \
-    __##p_method##_bind_rpc["transfer_mode"] = p_transfer_mode; \
-    __##p_method##_bind_rpc["call_local"] = p_call_local; \
-    __##p_method##_bind_rpc["channel"] = 0; \
-    rpc_config(#p_method, __##p_method##_bind_rpc); \
-    } while (0)
-
-#define MAX_TPS 20.0f // 20 times per second
-#define MIN_TPS 0.2f // Once per 5 seconds
-#define SLEEP_TPS 0.00001f // Once in 100000 seconds (27.7 hrs)
-
-#define RPC_EVERYONE rpc
-#define RPC_TARGET rpc_id
-#define SERVER_PEER 1
+// Godot constants
 
 namespace godot
 {
@@ -58,20 +40,48 @@ namespace godot
     };
 }
 
-#define NAMEOF(p_x) #p_x
+// Networking
 
-// Do not use this in places besides macros, PLEASE!!! We need code readability!!!
+#define BIND_RPC(p_method, p_authority, p_transfer_mode, p_call_local) \
+    do { \
+    Dictionary __##p_method##_bind_rpc; \
+    __##p_method##_bind_rpc["rpc_mode"] = p_authority; \
+    __##p_method##_bind_rpc["transfer_mode"] = p_transfer_mode; \
+    __##p_method##_bind_rpc["call_local"] = p_call_local; \
+    __##p_method##_bind_rpc["channel"] = 0; \
+    rpc_config(#p_method, __##p_method##_bind_rpc); \
+    } while (0)
+
+#define MAX_TPS 20.0f // 20 times per second
+#define MIN_TPS 0.2f // Once per 5 seconds
+#define SLEEP_TPS 0.00001f // Once in 100000 seconds (27.7 hrs)
+
+#define RPC_EVERYONE rpc
+#define RPC_TARGET rpc_id
+#define SERVER_PEER 1
+
+// Defines for macros only
+
 #define __CONCAT(x, y) #x "" #y
 #define __TOKEN_PASTE(x, y) x##y
 #define __CAT(x,y) __TOKEN_PASTE(x,y)
 
 // Generic
 
+#define NAMEOF(p_x) #p_x
+
 #define GD_CLASS(p_class, p_inherits) \
     typedef p_inherits Super; \
     typedef p_class CurrentClass; \
     GDCLASS(p_class, p_inherits) \
     struct __CAT(semicolon_place, __LINE__)
+
+#define BIND_METHOD(p_name) \
+    do { \
+    godot::ClassDB::bind_method(godot::D_METHOD(#p_name), &CurrentClass::p_name); \
+    } while (0)
+
+// Properties
 
 #define IMPL_PROPERTY_NONCONST(p_type, p_name) \
     void set_##p_name(p_type p_##p_name) { \
@@ -85,29 +95,6 @@ namespace godot
     _##p_name = p_##p_name; } \
     p_type get_##p_name() const { \
     return _##p_name; } \
-    struct __CAT(semicolon_place, __LINE__)
-
-#define DEFINE_SINGLETON() \
-    static CurrentClass* _singleton; \
-    struct __CAT(semicolon_place, __LINE__)
-
-#define DECLARE_SINGLETON(p_type) \
-    p_type* p_type::_singleton; \
-    struct __CAT(semicolon_place, __LINE__)
-
-#define ASSIGN_SINGLETON() \
-    do { \
-    _singleton = this; \
-    } while (0)
-
-#define UNASSIGN_SINGLETON() \
-    do { \
-    if (_singleton != nullptr) \
-    _singleton = nullptr; \
-    } while (0)
-
-#define IMPL_SINGLETON() \
-    static CurrentClass* get_singleton() { return godot::Object::cast_to<CurrentClass>(_singleton); } \
     struct __CAT(semicolon_place, __LINE__)
 
 #define BIND_PROPERTY(p_type, p_name) \
@@ -137,8 +124,6 @@ namespace godot
     BIND_VIRTUAL_METHOD(CurrentClass, set_##p_name); \
     } while (0)
 
-// Property path
-
 #define BIND_PROPERTY_PATH(p_type, p_name) \
     do { \
     godot::ClassDB::bind_method(godot::D_METHOD(__CONCAT(get_, p_name)), &CurrentClass::get_##p_name); \
@@ -153,7 +138,37 @@ namespace godot
     ADD_PROPERTY(godot::PropertyInfo(godot::Variant::OBJECT, #p_name, PROPERTY_HINT_RESOURCE_TYPE, #p_type), __CONCAT(set_, p_name), __CONCAT(get_, p_name)); \
     } while (0)
 
-// Debug only methods
+// Singletones
+
+#define DEFINE_SINGLETON() \
+    static CurrentClass* _singleton; \
+    struct __CAT(semicolon_place, __LINE__)
+
+#define DECLARE_SINGLETON(p_type) \
+    p_type* p_type::_singleton; \
+    struct __CAT(semicolon_place, __LINE__)
+
+#define BIND_SINGLETON() \
+    do { \
+    godot::ClassDB::bind_static_method(CurrentClass::get_class_static(), D_METHOD("get_singleton"), &CurrentClass::get_singleton); \
+    } while (0)
+
+#define ASSIGN_SINGLETON() \
+    do { \
+    _singleton = this; \
+    } while (0)
+
+#define UNASSIGN_SINGLETON() \
+    do { \
+    if (_singleton != nullptr) \
+    _singleton = nullptr; \
+    } while (0)
+
+#define IMPL_SINGLETON() \
+    static CurrentClass* get_singleton() { return godot::Object::cast_to<CurrentClass>(_singleton); } \
+    struct __CAT(semicolon_place, __LINE__)
+
+// Debug only
 
 #ifdef DEBUG_ENABLED
 #define IS_EDITOR Util::is_editor()
@@ -174,19 +189,9 @@ if (IS_RUNTIME) { return v; } \
 #define EDITOR_ONLY(v) return v;
 #endif
 
-// Method binding
-
-#define BIND_METHOD(p_name) \
-    do { \
-    godot::ClassDB::bind_method(godot::D_METHOD(#p_name), &CurrentClass::p_name); \
-    } while (0)
-
-#define BIND_SINGLETON() \
-    do { \
-    godot::ClassDB::bind_static_method(CurrentClass::get_class_static(), D_METHOD("get_singleton"), &CurrentClass::get_singleton); \
-    } while (0)
-
 // Util class
+// It is primarily used to implement useful methods that should be available from everywhere in code or to hide an implementation,
+// requiring additional includes that you wouldnt want in util, which is included by almost every file
 
 namespace recusant
 {
