@@ -1,0 +1,24 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://fd7b1cm8uaie"]
+
+[ext_resource type="Texture2D" uid="uid://qwy8p4bac8ef" path="res://thirdparty/textures/kloppenheim_07_puresky_4k.hdr" id="1_k1mp1"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u3c5a"]
+panorama = ExtResource("1_k1mp1")
+
+[sub_resource type="Sky" id="Sky_ro2dv"]
+sky_material = SubResource("PanoramaSkyMaterial_u3c5a")
+
+[resource]
+background_mode = 2
+background_energy_multiplier = 1.21
+sky = SubResource("Sky_ro2dv")
+tonemap_mode = 2
+ssao_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_min_cell_size = 9.76563e-05
+sdfgi_cascade0_distance = 0.00625
+sdfgi_max_distance = 0.1
+sdfgi_y_scale = 0
+sdfgi_probe_bias = 0.5
+fog_light_energy = 6.93
+volumetric_fog_detail_spread = 1.86607

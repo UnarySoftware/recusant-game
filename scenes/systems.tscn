@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbsaus72uc6rr"]
+
+[ext_resource type="PackedScene" uid="uid://bendtsxxlbl3" path="res://scenes/ui.tscn" id="2_y3b3q"]
+[ext_resource type="PackedScene" uid="uid://deulws2imvmjk" path="res://scenes/dynamic/player/player.tscn" id="3_dvd4g"]
+[ext_resource type="PackedScene" uid="uid://djxyex2dfiq5j" path="res://levels/main.tscn" id="3_hta3w"]
+
+[node name="Core" type="Core"]
+
+[node name="System" type="Group" parent="."]
+
+[node name="Logger" type="Logger" parent="System"]
+
+[node name="LaunchArgs" type="LaunchArgs" parent="System"]
+
+[node name="Network" type="Network" parent="System"]
+
+[node name="Steam" type="Steam" parent="System"]
+
+[node name="Commander" type="Commander" parent="System"]
+
+[node name="Game" type="Group" parent="."]
+
+[node name="PlayerSpawner" type="PlayerSpawner" parent="Game" node_paths=PackedStringArray("players")]
+players = NodePath("Players")
+player_scene = ExtResource("3_dvd4g")
+
+[node name="Players" type="Node" parent="Game/PlayerSpawner"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Game/PlayerSpawner"]
+_spawnable_scenes = PackedStringArray("res://scenes/dynamic/player/player.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="UI" parent="." instance=ExtResource("2_y3b3q")]
+
+[node name="LevelManager" type="LevelManager" parent="."]
+scene = ExtResource("3_hta3w")
+
+[node name="Level" type="EntitySpawner" parent="LevelManager"]
+directory = "res://levels"
+spawn_path = NodePath(".")

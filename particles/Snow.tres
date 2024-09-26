@@ -1,0 +1,7 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://dkb0uw7os8qdy"]
+
+[resource]
+emission_shape = 3
+emission_box_extents = Vector3(50, 1, 50)
+gravity = Vector3(0, -2.328, 0)
+collision_mode = 2

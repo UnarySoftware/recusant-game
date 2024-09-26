@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ZoneNode3D" inherits="CollisionShapeVisual3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="class.xsd">
+    <brief_description>
+        Node that splits level into Zones.
+    </brief_description>
+    <description>
+        In order for some of the things to work as expected we are required to split level into Zones.
+        This class is an AABB that was made for this specific reason alone.
+    </description>
+    <tutorials>
+    </tutorials>
+</class>

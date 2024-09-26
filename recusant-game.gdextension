@@ -1,0 +1,72 @@
+[configuration]
+
+entry_symbol = "recusant_game_init"
+compatibility_minimum = "4.3"
+reloadable = true
+
+[libraries]
+
+windows.debug.x86_64 = "res://bin/recusant-game.windows.editor.dev.x86_64.dll"
+windows.release.x86_64 = "res://bin/recusant-game.windows.release.x86_64.dll"
+linux.debug.x86_64 = "res://bin/recusant-game.linux.editor.dev.x86_64.so"
+linux.release.x86_64 = "res://bin/recusant-game.linux.release.x86_64.so"
+
+[icons]
+; Resources
+Item = "res://addons/recusant/icons/Resource.svg"
+; Shared units
+Group = "res://addons/recusant/icons/Group.svg"
+SleepBlock = "res://addons/recusant/icons/Resource.svg"
+MotionGenerator = "res://addons/recusant/icons/Resource.svg"
+; Shared code
+Entity = "res://addons/recusant/icons/Entity.svg"
+BaseSynchronizer = "res://addons/recusant/icons/BaseSynchronizer.svg"
+AuthoritySynchronizer = "res://addons/recusant/icons/BaseSynchronizer.svg"
+EntitySynchronizer = "res://addons/recusant/icons/BaseSynchronizer.svg"
+EntitySpawner = "res://addons/recusant/icons/EntitySpawner.svg"
+Component = "res://addons/recusant/icons/Component.svg"
+Snapshot = "res://addons/recusant/icons/Component.svg"
+Interactable = "res://addons/recusant/icons/Component.svg"
+; Level scenes
+CollisionShapeVisualManager = "res://addons/recusant/icons/CollisionShapeVisual.svg"
+CollisionShapeVisual3D = "res://addons/recusant/icons/CollisionShapeVisual.svg"
+ZoneNode3D = "res://addons/recusant/icons/ZoneNode3D.svg"
+LevelZoning = "res://addons/recusant/icons/ZoneNode3D.svg"
+DoorInteractable = "res://addons/recusant/icons/Component.svg"
+DoorPathfinding = "res://addons/recusant/icons/Component.svg"
+TriggerMultiple = "res://addons/recusant/icons/Component.svg"
+DrillResources = "res://addons/recusant/icons/Component.svg"
+DrillInteractable = "res://addons/recusant/icons/Component.svg"
+; Dynamic scenes
+PlayerMovement = "res://addons/recusant/icons/Component.svg"
+PlayerSnapshot = "res://addons/recusant/icons/Component.svg"
+PlayerLabel = "res://addons/recusant/icons/Component.svg"
+PlayerCallout = "res://addons/recusant/icons/Component.svg"
+PlayerInteractor = "res://addons/recusant/icons/Component.svg"
+PlayerShooter = "res://addons/recusant/icons/Component.svg"
+SoldierSnapshot = "res://addons/recusant/icons/Component.svg"
+SoldierPathfinding = "res://addons/recusant/icons/Component.svg"
+; System units
+SteamMultiplayerPeer = "res://addons/recusant/icons/Resource.svg"
+SteamCallback = "res://addons/recusant/icons/Resource.svg"
+; System scenes
+System = "res://addons/recusant/icons/System.svg"
+Logger = "res://addons/recusant/icons/System.svg"
+Core = "res://addons/recusant/icons/System.svg"
+LaunchArgs = "res://addons/recusant/icons/System.svg"
+Steam = "res://addons/recusant/icons/System.svg"
+Network = "res://addons/recusant/icons/System.svg"
+PlayerSpawner = "res://addons/recusant/icons/System.svg"
+Commander = "res://addons/recusant/icons/System.svg"
+; UI scenes
+UiRoot = "res://addons/recusant/icons/UiRoot.svg"
+UiState = "res://addons/recusant/icons/UiState.svg"
+UiComponent = "res://addons/recusant/icons/UiComponent.svg"
+CoreState = "res://addons/recusant/icons/UiState.svg"
+DebugInfo = "res://addons/recusant/icons/UiComponent.svg"
+EscapeState = "res://addons/recusant/icons/UiState.svg"
+GameplayState = "res://addons/recusant/icons/UiState.svg"
+Chat = "res://addons/recusant/icons/UiComponent.svg"
+InteractMenu = "res://addons/recusant/icons/UiComponent.svg"
+LoadingState = "res://addons/recusant/icons/UiState.svg"
+SettingsState = "res://addons/recusant/icons/UiState.svg"

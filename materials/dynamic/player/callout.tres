@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://lppda3job08g"]
+
+[ext_resource type="Texture2D" uid="uid://b31vyc1ps46s5" path="res://textures/dynamic/player/callout.png" id="1_qdgad"]
+
+[resource]
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = ExtResource("1_qdgad")
+disable_receive_shadows = true
+billboard_mode = 1
+billboard_keep_scale = true
+fixed_size = true

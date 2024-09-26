@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cne23skmnhuai"]
+
+[ext_resource type="Material" uid="uid://dkb0uw7os8qdy" path="res://particles/Snow.tres" id="1_xaxoe"]
+[ext_resource type="Material" uid="uid://cn23b2dph8g8" path="res://materials/particles/Snow.tres" id="2_8uoen"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_48bso"]
+lightmap_size_hint = Vector2i(4, 4)
+material = ExtResource("2_8uoen")
+size = Vector2(0.5, 0.5)
+subdivide_width = 3
+subdivide_depth = 3
+orientation = 2
+
+[node name="Snow" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 46.8934, 0)
+gi_mode = 0
+amount = 500
+lifetime = 20.0
+visibility_aabb = AABB(-50.2711, -466.022, -50.1689, 100.762, 467.522, 100.399)
+process_material = ExtResource("1_xaxoe")
+draw_pass_1 = SubResource("PlaneMesh_48bso")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="."]
+size = Vector3(100, 2, 100)

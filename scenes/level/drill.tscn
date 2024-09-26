@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://u2ynby5t0pm5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b3u5h"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_lwwl1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xjkuh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xmjnj"]
+size = Vector3(1, 8.0561, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kvpsf"]
+properties/0/path = NodePath("DrillResources:timestamp")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("DrillResources:timestamp_collected")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
+[node name="Drill" type="Entity"]
+
+[node name="Base" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 1.14504, 0)
+mesh = SubResource("BoxMesh_b3u5h")
+
+[node name="Lever" type="MeshInstance3D" parent="Base"]
+transform = Transform3D(0.647006, 0, 0, 0, 6.93948, 0, 0, 0, 0.427034, -0.00683689, 3.75238, -0.25396)
+mesh = SubResource("BoxMesh_b3u5h")
+skeleton = NodePath("../..")
+
+[node name="Head" type="MeshInstance3D" parent="Base/Lever"]
+transform = Transform3D(-5.08402e-08, 7.55687e-16, 0.800766, -9.99001e-08, -0.712388, -2.45975e-15, 1.16309, -7.95471e-08, 3.50026e-08, -1.47149e-07, 0.137837, 1.18003)
+mesh = SubResource("PrismMesh_lwwl1")
+
+[node name="Start" type="Node3D" parent="Base/Lever"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.47149e-07, 0.137837, 1.18003)
+
+[node name="Finish" type="Node3D" parent="Base/Lever"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, 1.18)
+
+[node name="Screen" type="MeshInstance3D" parent="Base/Lever"]
+transform = Transform3D(0.0292622, 0, 0, 0, 0.318299, 0, 0, 0, 1.12347, -0.510275, 0, 0)
+mesh = SubResource("BoxMesh_xjkuh")
+
+[node name="Label3D" type="Label3D" parent="Base/Lever/Screen"]
+transform = Transform3D(-1.92346e-08, 0, -1, 0, 0.474419, 0, 0.440035, 0, -4.37114e-08, -0.582668, 0.0280936, -0.0173416)
+pixel_size = 0.0201
+text = "TEST"
+font_size = 42
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Base"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.36931, 0)
+shape = SubResource("BoxShape3D_xmjnj")
+
+[node name="DrillResources" type="DrillResources" parent="." node_paths=PackedStringArray("head", "start_move", "end_move", "screen")]
+head = NodePath("../Base/Lever/Head")
+start_move = NodePath("../Base/Lever/Start")
+end_move = NodePath("../Base/Lever/Finish")
+screen = NodePath("../Base/Lever/Screen/Label3D")
+
+[node name="DrillInteractable" type="DrillInteractable" parent="."]
+
+[node name="EntitySynchronizer" type="EntitySynchronizer" parent="."]
+on_change_tps = 4.0
+always_tps = 0.2
+replication_config = SubResource("SceneReplicationConfig_kvpsf")
